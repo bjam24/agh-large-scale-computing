@@ -1,0 +1,31 @@
+# Assignemnt 1
+aws --version
+mkdir aws-cli-docker
+cd aws-cli-docker
+nano Dockerfile
+docker build -t aws-cli-docker .
+docker run --rm -it -v ~/.aws:/root/.aws my-aws-cli --version
+docker images
+
+# Assignemnt 2
+# cluster was created manually in AWS Academy Learner Lab
+aws sts get-caller-identity
+aws eks update-kubeconfig --region us-east-1 --name cluster-1
+curl https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3 | bash
+helm repo add nfs-ganesha-server-and-external-provisioner https://kubernetes-sigs.github.io/nfs-ganesha-server-and-external-provisioner/
+helm install my-release nfs-ganesha-server-and-external-provisioner/nfs-server-provisioner
+nano pvc.yaml
+kubectl apply -f pvc.yaml
+kubectl get pvc
+nano deployment.yaml
+kubectl apply -f deployment.yaml
+kubectl get deployment
+kubectl expose deployment/deployment --type=LoadBalancer --port=80
+kubectl get svc
+kubectl describe svc deployment
+kubectl get nodes -o wide
+nano job.yaml
+kubectl apply -f job.yaml
+kubectl get pods
+curl http://18.206.200.63:31607
+curl http://34.204.3.104:31607

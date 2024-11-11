@@ -1,0 +1,21 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: nfs-copy-job
+spec:
+  template:
+    spec:
+      containers:
+      - name: nfs-copy
+        image: busybox
+        command: ["sh", "-c", "echo '<html><body><h1>Welcome to the HTTP server</h1></body></html>' > /mnt/index.html"]
+        volumeMounts:
+          - mountPath: /mnt
+            name: web-content
+      restartPolicy: Never
+      volumes:
+      - name: web-content
+        persistentVolumeClaim:
+          claimName: my-pvc
+  backoffLimit: 4
+
